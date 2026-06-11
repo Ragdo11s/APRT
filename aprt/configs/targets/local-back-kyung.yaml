@@ -1,0 +1,55 @@
+project:
+  name: back-kyung
+  owner: internal-lab
+  environment: local
+
+scope:
+  allowed_hosts:
+    - https://can-fly.shop
+  denied_paths:
+    - /logout
+    - /api/logout
+    - /payment
+    - /api/payment
+    - /api/orders/checkout
+    - /api/orders/confirm
+    - /api/users/delete
+    - /api/users/withdraw
+    - /api/password/change
+    - /api/admin
+    - /actuator/shutdown
+  max_risk_level: safe
+  active_scan_allowed: false
+
+targets:
+  - id: back-kyung-local
+    type: web
+    base_url: https://can-fly.shop
+    openapi_url: https://can-fly.shop/v3/api-docs
+    swagger_url: https://can-fly.shop/swagger-ui.html
+    auth_profile: user-basic
+
+auth_profiles:
+  - id: user-basic
+    type: bearer
+    token_env: APRT_TARGET_ACCESS_TOKEN
+
+scan_profiles:
+  nuclei:
+    enabled: true
+    severity:
+      - low
+      - medium
+      - high
+      - critical
+    exclude_tags:
+      - intrusive
+      - dos
+      - fuzz
+      - brute-force
+
+  zap:
+    enabled: true
+    mode: baseline
+    ajax_spider: false
+    active_scan: false

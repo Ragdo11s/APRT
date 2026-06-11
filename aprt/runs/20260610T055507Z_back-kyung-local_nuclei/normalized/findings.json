@@ -1,0 +1,833 @@
+{
+  "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+  "count": 21,
+  "findings": [
+    {
+      "finding_id": "f-6431d22cfb48",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "WAF Detection",
+      "description": "A web application firewall was detected.",
+      "category": "unknown",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "POST",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "POST / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0\r\nConnection: close\r\nContent-Length: 27\r\nAuthorization: Bearer ***MASKED***\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:55:51 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "nginxgeneric",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-200"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.478262+00:00"
+    },
+    {
+      "finding_id": "f-f508921780dd",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "SSH Auth Methods - Detection",
+      "description": "SSH (Secure Shell) authentication modes are methods used to verify the identity of users and ensure secure access to remote systems. Common SSH authentication modes include password-based authentication, which relies on a secret passphrase, and public key authentication, which uses cryptographic keys for a more secure and convenient login process. Additionally, multi-factor authentication (MFA) can be employed to enhance security by requiring users to provide multiple forms of authentication, such as a password and a one-time code.",
+      "category": "unknown",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "can-fly.shop:22",
+      "method": "UNKNOWN",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "var m = require(\"nuclei/ssh\");\nvar c = m.SSHClient();\nvar response = c.ConnectSSHInfoMode(Host, Port);\nExport(response);",
+        "response_sample": "{\n  \"Banner\": \"\",\n  \"ServerID\": {\n    \"Raw\": \"SSH-2.0-OpenSSH_10.2p1 Ubuntu-2ubuntu3.2\",\n    \"ProtoVersion\": \"2.0\",\n    \"SoftwareVersion\": \"OpenSSH_10.2p1\",\n    \"Comment\": \"Ubuntu-2ubuntu3.2\"\n  },\n  \"ClientID\": null,\n  \"ServerKex\": {\"cookie\":\"u9DIQzmqpTO50keuafkQVQ==\",\"kex_algorithms\":[\"mlkem768x25519-sha256\",\"sntrup761x25519-sha512\",\"sntrup761x25519-sha512@openssh.com\",\"curve25519-sha256\",\"curve25519-sha256@libssh.org\",\"ecdh-sha2-nistp256\",\"ecdh-sha2-nistp384\",\"ecdh-sha2-nistp521\",\"ext-info-s\",\"kex-strict-s-v00@openssh.com\"],\"host_key_algorithms\":[\"rsa-sha2-512\",\"rsa-sha2-256\",\"ecdsa-sha2-nistp256\",\"ssh-ed25519\"],\"client_to_server_ciphers\":[\"chacha20-poly1305@openssh.com\",\"aes128-gcm@openssh.com\",\"aes256-gcm@openssh.com\",\"aes128-ctr\",\"aes192-ctr\",\"aes256-ctr\"],\"server_to_client_ciphers\":[\"chacha20-poly1305@openssh.com\",\"aes128-gcm@openssh.com\",\"aes256-gcm@openssh.com\",\"aes128-ctr\",\"aes192-ctr\",\"aes256-ctr\"],\"client_to_server_macs\":[\"umac-64-etm@openssh.com\",\"umac-128-etm@openssh.com\",\"hmac-sha2-256-etm@openssh.com\",\"hmac-sha2-512-etm@openssh.com\",\"hmac-sha1-etm@openssh.com\",\"umac-64@openssh.com\",\"umac-128@openssh.com\",\"hmac-sha2-256\",\"hmac-sha2-512\",\"hmac-sha1\"],\"server_to_client_macs\":[\"umac-64-etm@openssh.com\",\"umac-128-etm@openssh.com\",\"hmac-sha2-256-etm@openssh.com\",\"hmac-sha2-512-etm@openssh.com\",\"hmac-sha1-etm@openssh.com\",\"umac-64@openssh.com\",\"umac-128@openssh.com\",\"hmac-sha2-256\",\"hmac-sha2-512\",\"hmac-sha1\"],\"client_to_server_compression\":[\"none\",\"zlib@openssh.com\"],\"server_to_client_compression\":[\"none\",\"zlib@openssh.com\"],\"first_kex_follows\":false,\"reserved\":0,\"serverHaSSH\":\"671c5858369db8e0a60108d866bbf8ec\"},\n  \"ClientKex\": null,\n  \"AlgorithmSelection\": {\"dh_kex_algorithm\":\"curve25519-sha256@libssh.org\",\"host_key_algorithm\":\"ecdsa-sha2-nistp256\",\"client_to_server_alg_group\":{\"cipher\":\"aes128-ctr\",\"mac\":\"hmac-sha2-256\",\"compression\":\"none\"},\"server_to_client_alg_group\":{\"cipher\":\"aes128-ctr\",\"mac\":\"hmac-sha2-256\",\"compression\":\"none\"}},\n  \"DHKeyExchange\": {\"curve25519_sha256_params\":{\"server_public\":\"UjjuhfQgxG56fCHG3Tu6MqLz3DXNPWWKWpuAMuRhUQo=\"},\"server_signature\":{\"parsed\":{\"algorithm\":\"ecdsa-sha2-nistp256\",\"value\":\"AAAAIQDF+LnEZ1S1DEpeeazYmqMiPuHBweoNmZsaPxea2U6ahQAAACAcewrmzXzeIHz+t6Da0fpGmzUx/w50xw2RwxFC2Ty+pw==\"},\"raw\":\"AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAABJAAAAIQDF+LnEZ1S1DEpeeazYmqMiPuHBweoNmZsaPxea2U6ahQAAACAcewrmzXzeIHz+t6Da0fpGmzUx/w50xw2RwxFC2Ty+pw==\",\"h\":\"sOIPZpdlbLHyshVAjA9RfTCIT6LtIbZspc3zPFrCS6Y=\"},\"server_host_key\":{\"ecdsa_public_key\":{\"b\":\"WsY12Ko6k+ez671VdpiGvGUdBrDMU7D2O848PifSYEs=\",\"curve\":\"P-256\",\"gx\":\"axfR8uEsQkf4vOblY6RA8ncDfYEt6zOg9KE5RdiYwpY=\",\"gy\":\"T+NC4v4af5uO5+tKfA+eFivOM1drMV7Oy7ZAaDe/UfU=\",\"length\":256,\"n\":\"/////wAAAAD//////////7zm+q2nF56E87nKwvxjJVE=\",\"p\":\"/////wAAAAEAAAAAAAAAAAAAAAD///////////////8=\",\"x\":\"iPepRqGz+EhNfUUi6NIALOCpR89AqL7QMlfozz10D1Y=\",\"y\":\"U2CJL5kinKdbGlMrfiAHHZGyjRYLI8jJPl/VqamdkPQ=\"},\"raw\":\"AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIj3qUahs/hITX1FIujSACzgqUfPQKi+0DJX6M89dA9WU2CJL5kinKdbGlMrfiAHHZGyjRYLI8jJPl/VqamdkPQ=\",\"algorithm\":\"ecdsa-sha2-nistp256\",\"fingerprint_sha256\":\"a521597977c09e4dec3cacef19ddd4c0e608e42483357f36706dbbd91f59a3f7\"}},\n  \"UserAuth\": [\n    \"publickey\"\n  ],\n  \"Crypto\": null\n}",
+        "matched_text": "[\"publickey\"]",
+        "status_code": null,
+        "masked": false,
+        "masked_patterns": []
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": []
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.478457+00:00"
+    },
+    {
+      "finding_id": "f-f97d7bc7b643",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "SSH Server Software Enumeration",
+      "description": "",
+      "category": "unknown",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "can-fly.shop:22",
+      "method": "UNKNOWN",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "var m = require(\"nuclei/ssh\");\nvar c = m.SSHClient();\nvar response = c.ConnectSSHInfoMode(Host, Port);\nExport(response);",
+        "response_sample": "{\n  \"Banner\": \"\",\n  \"ServerID\": {\n    \"Raw\": \"SSH-2.0-OpenSSH_10.2p1 Ubuntu-2ubuntu3.2\",\n    \"ProtoVersion\": \"2.0\",\n    \"SoftwareVersion\": \"OpenSSH_10.2p1\",\n    \"Comment\": \"Ubuntu-2ubuntu3.2\"\n  },\n  \"ClientID\": null,\n  \"ServerKex\": {\"cookie\":\"u9DIQzmqpTO50keuafkQVQ==\",\"kex_algorithms\":[\"mlkem768x25519-sha256\",\"sntrup761x25519-sha512\",\"sntrup761x25519-sha512@openssh.com\",\"curve25519-sha256\",\"curve25519-sha256@libssh.org\",\"ecdh-sha2-nistp256\",\"ecdh-sha2-nistp384\",\"ecdh-sha2-nistp521\",\"ext-info-s\",\"kex-strict-s-v00@openssh.com\"],\"host_key_algorithms\":[\"rsa-sha2-512\",\"rsa-sha2-256\",\"ecdsa-sha2-nistp256\",\"ssh-ed25519\"],\"client_to_server_ciphers\":[\"chacha20-poly1305@openssh.com\",\"aes128-gcm@openssh.com\",\"aes256-gcm@openssh.com\",\"aes128-ctr\",\"aes192-ctr\",\"aes256-ctr\"],\"server_to_client_ciphers\":[\"chacha20-poly1305@openssh.com\",\"aes128-gcm@openssh.com\",\"aes256-gcm@openssh.com\",\"aes128-ctr\",\"aes192-ctr\",\"aes256-ctr\"],\"client_to_server_macs\":[\"umac-64-etm@openssh.com\",\"umac-128-etm@openssh.com\",\"hmac-sha2-256-etm@openssh.com\",\"hmac-sha2-512-etm@openssh.com\",\"hmac-sha1-etm@openssh.com\",\"umac-64@openssh.com\",\"umac-128@openssh.com\",\"hmac-sha2-256\",\"hmac-sha2-512\",\"hmac-sha1\"],\"server_to_client_macs\":[\"umac-64-etm@openssh.com\",\"umac-128-etm@openssh.com\",\"hmac-sha2-256-etm@openssh.com\",\"hmac-sha2-512-etm@openssh.com\",\"hmac-sha1-etm@openssh.com\",\"umac-64@openssh.com\",\"umac-128@openssh.com\",\"hmac-sha2-256\",\"hmac-sha2-512\",\"hmac-sha1\"],\"client_to_server_compression\":[\"none\",\"zlib@openssh.com\"],\"server_to_client_compression\":[\"none\",\"zlib@openssh.com\"],\"first_kex_follows\":false,\"reserved\":0,\"serverHaSSH\":\"671c5858369db8e0a60108d866bbf8ec\"},\n  \"ClientKex\": null,\n  \"AlgorithmSelection\": {\"dh_kex_algorithm\":\"curve25519-sha256@libssh.org\",\"host_key_algorithm\":\"ecdsa-sha2-nistp256\",\"client_to_server_alg_group\":{\"cipher\":\"aes128-ctr\",\"mac\":\"hmac-sha2-256\",\"compression\":\"none\"},\"server_to_client_alg_group\":{\"cipher\":\"aes128-ctr\",\"mac\":\"hmac-sha2-256\",\"compression\":\"none\"}},\n  \"DHKeyExchange\": {\"curve25519_sha256_params\":{\"server_public\":\"UjjuhfQgxG56fCHG3Tu6MqLz3DXNPWWKWpuAMuRhUQo=\"},\"server_signature\":{\"parsed\":{\"algorithm\":\"ecdsa-sha2-nistp256\",\"value\":\"AAAAIQDF+LnEZ1S1DEpeeazYmqMiPuHBweoNmZsaPxea2U6ahQAAACAcewrmzXzeIHz+t6Da0fpGmzUx/w50xw2RwxFC2Ty+pw==\"},\"raw\":\"AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAABJAAAAIQDF+LnEZ1S1DEpeeazYmqMiPuHBweoNmZsaPxea2U6ahQAAACAcewrmzXzeIHz+t6Da0fpGmzUx/w50xw2RwxFC2Ty+pw==\",\"h\":\"sOIPZpdlbLHyshVAjA9RfTCIT6LtIbZspc3zPFrCS6Y=\"},\"server_host_key\":{\"ecdsa_public_key\":{\"b\":\"WsY12Ko6k+ez671VdpiGvGUdBrDMU7D2O848PifSYEs=\",\"curve\":\"P-256\",\"gx\":\"axfR8uEsQkf4vOblY6RA8ncDfYEt6zOg9KE5RdiYwpY=\",\"gy\":\"T+NC4v4af5uO5+tKfA+eFivOM1drMV7Oy7ZAaDe/UfU=\",\"length\":256,\"n\":\"/////wAAAAD//////////7zm+q2nF56E87nKwvxjJVE=\",\"p\":\"/////wAAAAEAAAAAAAAAAAAAAAD///////////////8=\",\"x\":\"iPepRqGz+EhNfUUi6NIALOCpR89AqL7QMlfozz10D1Y=\",\"y\":\"U2CJL5kinKdbGlMrfiAHHZGyjRYLI8jJPl/VqamdkPQ=\"},\"raw\":\"AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIj3qUahs/hITX1FIujSACzgqUfPQKi+0DJX6M89dA9WU2CJL5kinKdbGlMrfiAHHZGyjRYLI8jJPl/VqamdkPQ=\",\"algorithm\":\"ecdsa-sha2-nistp256\",\"fingerprint_sha256\":\"a521597977c09e4dec3cacef19ddd4c0e608e42483357f36706dbbd91f59a3f7\"}},\n  \"UserAuth\": [\n    \"publickey\"\n  ],\n  \"Crypto\": null\n}",
+        "matched_text": "SSH-2.0-OpenSSH_10.2p1 Ubuntu-2ubuntu3.2",
+        "status_code": null,
+        "masked": false,
+        "masked_patterns": []
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": []
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.478646+00:00"
+    },
+    {
+      "finding_id": "f-4aa20e9b3bdf",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "SSH SHA-1 HMAC Algorithms Enabled",
+      "description": "The SSH server at the remote end is set up to allow the use of SHA-1 HMAC algorithms.",
+      "category": "misconfiguration",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "can-fly.shop:22",
+      "method": "UNKNOWN",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "let m = require(\"nuclei/ssh\");\nlet c = m.SSHClient();\nlet response = c.ConnectSSHInfoMode(Host, Port);\nExport(response);",
+        "response_sample": "{\n  \"Banner\": \"\",\n  \"ServerID\": {\n    \"Raw\": \"SSH-2.0-OpenSSH_10.2p1 Ubuntu-2ubuntu3.2\",\n    \"ProtoVersion\": \"2.0\",\n    \"SoftwareVersion\": \"OpenSSH_10.2p1\",\n    \"Comment\": \"Ubuntu-2ubuntu3.2\"\n  },\n  \"ClientID\": null,\n  \"ServerKex\": {\"cookie\":\"u9DIQzmqpTO50keuafkQVQ==\",\"kex_algorithms\":[\"mlkem768x25519-sha256\",\"sntrup761x25519-sha512\",\"sntrup761x25519-sha512@openssh.com\",\"curve25519-sha256\",\"curve25519-sha256@libssh.org\",\"ecdh-sha2-nistp256\",\"ecdh-sha2-nistp384\",\"ecdh-sha2-nistp521\",\"ext-info-s\",\"kex-strict-s-v00@openssh.com\"],\"host_key_algorithms\":[\"rsa-sha2-512\",\"rsa-sha2-256\",\"ecdsa-sha2-nistp256\",\"ssh-ed25519\"],\"client_to_server_ciphers\":[\"chacha20-poly1305@openssh.com\",\"aes128-gcm@openssh.com\",\"aes256-gcm@openssh.com\",\"aes128-ctr\",\"aes192-ctr\",\"aes256-ctr\"],\"server_to_client_ciphers\":[\"chacha20-poly1305@openssh.com\",\"aes128-gcm@openssh.com\",\"aes256-gcm@openssh.com\",\"aes128-ctr\",\"aes192-ctr\",\"aes256-ctr\"],\"client_to_server_macs\":[\"umac-64-etm@openssh.com\",\"umac-128-etm@openssh.com\",\"hmac-sha2-256-etm@openssh.com\",\"hmac-sha2-512-etm@openssh.com\",\"hmac-sha1-etm@openssh.com\",\"umac-64@openssh.com\",\"umac-128@openssh.com\",\"hmac-sha2-256\",\"hmac-sha2-512\",\"hmac-sha1\"],\"server_to_client_macs\":[\"umac-64-etm@openssh.com\",\"umac-128-etm@openssh.com\",\"hmac-sha2-256-etm@openssh.com\",\"hmac-sha2-512-etm@openssh.com\",\"hmac-sha1-etm@openssh.com\",\"umac-64@openssh.com\",\"umac-128@openssh.com\",\"hmac-sha2-256\",\"hmac-sha2-512\",\"hmac-sha1\"],\"client_to_server_compression\":[\"none\",\"zlib@openssh.com\"],\"server_to_client_compression\":[\"none\",\"zlib@openssh.com\"],\"first_kex_follows\":false,\"reserved\":0,\"serverHaSSH\":\"671c5858369db8e0a60108d866bbf8ec\"},\n  \"ClientKex\": null,\n  \"AlgorithmSelection\": {\"dh_kex_algorithm\":\"curve25519-sha256@libssh.org\",\"host_key_algorithm\":\"ecdsa-sha2-nistp256\",\"client_to_server_alg_group\":{\"cipher\":\"aes128-ctr\",\"mac\":\"hmac-sha2-256\",\"compression\":\"none\"},\"server_to_client_alg_group\":{\"cipher\":\"aes128-ctr\",\"mac\":\"hmac-sha2-256\",\"compression\":\"none\"}},\n  \"DHKeyExchange\": {\"curve25519_sha256_params\":{\"server_public\":\"UjjuhfQgxG56fCHG3Tu6MqLz3DXNPWWKWpuAMuRhUQo=\"},\"server_signature\":{\"parsed\":{\"algorithm\":\"ecdsa-sha2-nistp256\",\"value\":\"AAAAIQDF+LnEZ1S1DEpeeazYmqMiPuHBweoNmZsaPxea2U6ahQAAACAcewrmzXzeIHz+t6Da0fpGmzUx/w50xw2RwxFC2Ty+pw==\"},\"raw\":\"AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAABJAAAAIQDF+LnEZ1S1DEpeeazYmqMiPuHBweoNmZsaPxea2U6ahQAAACAcewrmzXzeIHz+t6Da0fpGmzUx/w50xw2RwxFC2Ty+pw==\",\"h\":\"sOIPZpdlbLHyshVAjA9RfTCIT6LtIbZspc3zPFrCS6Y=\"},\"server_host_key\":{\"ecdsa_public_key\":{\"b\":\"WsY12Ko6k+ez671VdpiGvGUdBrDMU7D2O848PifSYEs=\",\"curve\":\"P-256\",\"gx\":\"axfR8uEsQkf4vOblY6RA8ncDfYEt6zOg9KE5RdiYwpY=\",\"gy\":\"T+NC4v4af5uO5+tKfA+eFivOM1drMV7Oy7ZAaDe/UfU=\",\"length\":256,\"n\":\"/////wAAAAD//////////7zm+q2nF56E87nKwvxjJVE=\",\"p\":\"/////wAAAAEAAAAAAAAAAAAAAAD///////////////8=\",\"x\":\"iPepRqGz+EhNfUUi6NIALOCpR89AqL7QMlfozz10D1Y=\",\"y\":\"U2CJL5kinKdbGlMrfiAHHZGyjRYLI8jJPl/VqamdkPQ=\"},\"raw\":\"AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIj3qUahs/hITX1FIujSACzgqUfPQKi+0DJX6M89dA9WU2CJL5kinKdbGlMrfiAHHZGyjRYLI8jJPl/VqamdkPQ=\",\"algorithm\":\"ecdsa-sha2-nistp256\",\"fingerprint_sha256\":\"a521597977c09e4dec3cacef19ddd4c0e608e42483357f36706dbbd91f59a3f7\"}},\n  \"UserAuth\": [\n    \"publickey\"\n  ],\n  \"Crypto\": null\n}",
+        "matched_text": null,
+        "status_code": null,
+        "masked": false,
+        "masked_patterns": []
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": []
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.478809+00:00"
+    },
+    {
+      "finding_id": "f-a141cbb285d8",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "OpenSSH Service - Detect",
+      "description": "OpenSSH service was detected.",
+      "category": "unknown",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "can-fly.shop:22",
+      "method": "UNKNOWN",
+      "parameter": null,
+      "evidence": {
+        "request_sample": null,
+        "response_sample": "SSH-2.0-OpenSSH_10.2p1 Ubuntu-2ubuntu3.2\r\n",
+        "matched_text": "SSH-2.0-OpenSSH_10.2p1 Ubuntu-2ubuntu3.2",
+        "status_code": null,
+        "masked": false,
+        "masked_patterns": []
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-200"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.478844+00:00"
+    },
+    {
+      "finding_id": "f-37763a9eaab9",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "TLS Version - Detect",
+      "description": "TLS version detection is a security process used to determine the version of the Transport Layer Security (TLS) protocol used by a computer or server.\nIt is important to detect the TLS version in order to ensure secure communication between two computers or servers.",
+      "category": "crypto",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "can-fly.shop:443",
+      "method": "UNKNOWN",
+      "parameter": null,
+      "evidence": {
+        "request_sample": null,
+        "response_sample": null,
+        "matched_text": "tls13",
+        "status_code": null,
+        "masked": false,
+        "masked_patterns": []
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": []
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.478882+00:00"
+    },
+    {
+      "finding_id": "f-74e76dbf13bb",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "Java Spring Detection",
+      "description": "",
+      "category": "unknown",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop/error",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET /error HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:57:38 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"timestamp\":\"2026-06-10T05:57:38.476+00:00\",\"status\":999,\"error\":\"None\"}",
+        "matched_text": null,
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": []
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.478945+00:00"
+    },
+    {
+      "finding_id": "f-6e586ee3b9dc",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "HTTP Missing Security Headers",
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.",
+      "category": "header",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:57:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "referrer-policy",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-693"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.479023+00:00"
+    },
+    {
+      "finding_id": "f-06d92152e7fa",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "HTTP Missing Security Headers",
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.",
+      "category": "header",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:57:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "cross-origin-embedder-policy",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-693"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.479104+00:00"
+    },
+    {
+      "finding_id": "f-33ac740ddaf9",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "HTTP Missing Security Headers",
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.",
+      "category": "header",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:57:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "cross-origin-opener-policy",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-693"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.479169+00:00"
+    },
+    {
+      "finding_id": "f-4e6d7af216e1",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "HTTP Missing Security Headers",
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.",
+      "category": "header",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:57:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "cross-origin-resource-policy",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-693"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.479234+00:00"
+    },
+    {
+      "finding_id": "f-7e47bd9129fd",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "HTTP Missing Security Headers",
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.",
+      "category": "header",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:57:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "strict-transport-security",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-693"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.479308+00:00"
+    },
+    {
+      "finding_id": "f-89781b3319ec",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "HTTP Missing Security Headers",
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.",
+      "category": "header",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:57:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "content-security-policy",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-693"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.479372+00:00"
+    },
+    {
+      "finding_id": "f-39c7c1561875",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "HTTP Missing Security Headers",
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.",
+      "category": "header",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:57:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "permissions-policy",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-693"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.479433+00:00"
+    },
+    {
+      "finding_id": "f-a71596d1e631",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "HTTP Missing Security Headers",
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.",
+      "category": "header",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:57:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "x-permitted-cross-domain-policies",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-693"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.479503+00:00"
+    },
+    {
+      "finding_id": "f-be97004e90b1",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "RDAP WHOIS",
+      "description": "RDAP (Registration Data Access Protocol) is a standard defined by the IETF to replace the whois protocol\nin queries for information about Internet resource records such as domain names, IP addresses, and ASNs.",
+      "category": "unknown",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://rdap.gmoregistry.net/rdap/domain/can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET /domain/can-fly.shop HTTP/1.1\r\nHost: www.rdap.net\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101 Firefox/102.0\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nCache-Control: public, max-age=14400\r\nCf-Cache-Status: MISS\r\nCf-Ray: a0962414ce86322a-ICN\r\nContent-Language: en\r\nContent-Type: application/rdap+json\r\nDate: Wed, 10 Jun 2026 05:57:51 GMT\r\nEtag: e340fcae5e84fc385f605ea379f6f9050cb3a449\r\nExpires: Wed, 10 Jun 2026 09:57:51 GMT\r\nServer: cloudflare\r\nStrict-Transport-Security: max-age=31536000; includeSubDomains; preload\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"objectClassName\":\"domain\",\"handle\":\"DO14713437-GMO\",\"ldhName\":\"can-fly.shop\",\"status\":[\"client transfer prohibited\"],\"events\":[{\"eventAction\":\"registration\",\"eventDate\":\"2025-08-25T12:40:11.0Z\"},{\"eventAction\":\"expiration\",\"eventDate\":\"2026-08-25T23:59:59.0Z\"},{\"eventAction\":\"last changed\",\"eventDate\":\"2026-05-21T08:24:31.0Z\"},{\"eventAction\":\"last update of RDAP database\",\"eventDate\":\"2026-06-10T05:57:51.0Z\"}],\"nameservers\":[{\"objectClassName\":\"nameserver\",\"ldhName\":\"ns.gabia.co.kr\",\"links\":[{\"value\":\"https://rdap.gmoregistry.net/rdap/nameserver/ns.gabia.co.kr\",\"rel\":\"self\",\"href\":\"https://rdap.gmoregistry.net/rdap/nameserver/ns.gabia.co.kr\",\"type\":\"application/rdap+json\"}]},{\"objectClassName\":\"nameserver\",\"ldhName\":\"ns1.gabia.co.kr\",\"links\":[{\"value\":\"https://rdap.gmoregistry.net/rdap/nameserver/ns1.gabia.co.kr\",\"rel\":\"self\",\"href\":\"https://rdap.gmoregistry.net/rdap/nameserver/ns1.gabia.co.kr\",\"type\":\"application/rdap+json\"}]},{\"objectClassName\":\"nameserver\",\"ldhName\":\"ns.gabia.net\",\"links\":[{\"value\":\"https://rdap.gmoregistry.net/rdap/nameserver/ns.gabia.net\",\"rel\":\"self\",\"href\":\"https://rdap.gmoregistry.net/rdap/nameserver/ns.gabia.net\",\"type\":\"application/rdap+json\"}]}],\"secureDNS\":{\"delegationSigned\":false},\"entities\":[{\"objectClassName\":\"entity\",\"handle\":\"244\",\"status\":[\"active\"],\"vcardArray\":[\"vcard\",[[\"version\",{},\"text\",\"4.0\"],[\"fn\",{},\"text\",\"Gabia, Inc.\"]]],\"roles\":[\"registrar\"],\"publicIds\":[{\"type\":\"IANA Registrar ID\",\"identifier\":\"244\"}],\"entities\":[{\"objectClassName\":\"entity\",\"vcardArray\":[\"vcard\",[[\"version\",{},\"text\",\"4.0\"],[\"email\",{},\"text\",\"abuse@gabia.com\"],[\"tel\",{\"type\":\"voice\"},\"uri\",\"tel:+82.8293543\"],[\"fn\",{},\"text\",\"Gabia, Inc.\"]]],\"roles\":[\"abuse\"]}],\"links\":[{\"value\":\"https://rdap.gmoregistry.net/rdap/entity/244\",\"rel\":\"self\",\"href\":\"https://rdap.gmoregistry.net/rdap/entity/244\",\"type\":\"application/rdap+json\"},{\"value\":\"https://rdap.gabiadns.com/v1/\",\"rel\":\"about\",\"href\":\"https://rdap.gabiadns.com/v1/\",\"type\":\"application/rdap+json\"}]}],\"links\":[{\"value\":\"https://rdap.gabiadns.com/v1/\",\"rel\":\"about\",\"href\":\"https://rdap.gabiadns.com/v1/\",\"type\":\"application/rdap+json\"},{\"value\":\"https://rdap.gabiadns.com/v1/domain/can-fly.shop\",\"rel\":\"related\",\"href\":\"https://rdap.gabiadns.com/v1/domain/can-fly.shop\",\"type\":\"application/rdap+json\"},{\"value\":\"https://rdap.gmoregistry.net/rdap/domain/can-fly.shop\",\"rel\":\"self\",\"href\":\"https://rdap.gmoregistry.net/rdap/domain/can-fly.shop\",\"type\":\"application/rdap+json\"}],\"notices\":[{\"title\":\"Status Codes\",\"description\":[\"For more information on domain status codes, please visit https://icann.org/epp\"],\"links\":[{\"value\":\"https://icann.org/epp\",\"rel\":\"alternate\",\"href\":\"https://icann.org/epp\",\"type\":\"text/html\"}]},{\"title\":\"RDDS Inaccuracy Complaint Form\",\"description\":[\"URL of the ICANN RDDS Inaccuracy Complaint Form: https://www.icann.org/wicf\"],\"links\":[{\"value\":\"https://www.icann.org/wicf/\",\"rel\":\"alternate\",\"href\":\"https://www.icann.org/wicf/\",\"type\":\"text/html\"}]},{\"title\":\"Privacy Policy\",\"description\":[\"GMO Registry prioritizes data privacy, adhering to strict policies and collaborating with partners to protect customer information.\"],\"links\":[{\"value\":\"https://www.gmoregistry.com/en/privacy/\",\"rel\":\"alternate\",\"href\":\"https://www.gmoregistry.com/en/privacy/\",\"type\":\"text/html\"}]},{\"description\":[\"This response conforms to the RDAP Operational Profile for gTLD Registries and Registrars version 1.0\"]},{\"title\":\"Terms of Service\",\"description\":[\"Please query the RDAP service of the Registrar of Record identified in this output for information on how to contact the Registrar, Registrant, Admin, or Tech contact of the queried domain name.\",\"\",\"This RDAP service is provided by GMO Registry and only contains information pertaining to Internet domain names we have registered for our customers.\",\"GMO Registry does not guarantee the accuracy of this data.\",\"\",\"By using this service you are agreeing;\",\"\",\"(1) only to use the data for lawful purposes.\",\"(2) not to use any information presented here for any purpose other than determining ownership of domain names.\",\"...\"],\"links\":[{\"value\":\"https://rdap.gmoregistry.net/rdap/domain/can-fly.shop\",\"rel\":\"terms-of-service\",\"href\":\"https://rdap.gmoregistry.net/tos\",\"type\":\"text/html\"}]}],\"rdapConformance\":[\"rdap_level_0\",\"icann_rdap_response_profile_1\",\"icann_rdap_technical_implementation_guide_1\"],\"lang\":\"en\"}",
+        "matched_text": "244",
+        "status_code": 200,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-200"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.482323+00:00"
+    },
+    {
+      "finding_id": "f-f69fb2e8b48c",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "Wappalyzer Technology Detection",
+      "description": "",
+      "category": "unknown",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "https://can-fly.shop",
+      "method": "GET",
+      "parameter": null,
+      "evidence": {
+        "request_sample": "GET / HTTP/1.1\r\nHost: can-fly.shop\r\nUser-Agent: Mozilla/5.0 (Macintosh, Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAuthorization: Bearer ***MASKED***\r\nAccept-Encoding: gzip\r\n\r\n",
+        "response_sample": "HTTP/1.1 500 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: application/json\r\nDate: Wed, 10 Jun 2026 05:58:03 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nServer: nginx/1.28.3 (Ubuntu)\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 0\r\n\r\n{\"isSuccess\":false,\"code\":\"COMMON_500\",\"message\":\"서버 내부 오류가 발생했습니다.\",\"result\":\"No static resource .\"}",
+        "matched_text": "nginx",
+        "status_code": 500,
+        "masked": true,
+        "masked_patterns": [
+          "authorization_bearer"
+        ]
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": []
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.482402+00:00"
+    },
+    {
+      "finding_id": "f-b14729c168dc",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "NS Record Detection",
+      "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+      "category": "unknown",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "can-fly.shop",
+      "method": "UNKNOWN",
+      "parameter": null,
+      "evidence": {
+        "request_sample": ";; opcode: QUERY, status: NOERROR, id: 39853\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;can-fly.shop.\tIN\t NS\n",
+        "response_sample": ";; opcode: QUERY, status: NOERROR, id: 39853\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;can-fly.shop.\tIN\t NS\n\n;; ANSWER SECTION:\ncan-fly.shop.\t86400\tIN\tNS\tns.gabia.co.kr.\ncan-fly.shop.\t86400\tIN\tNS\tns1.gabia.co.kr.\ncan-fly.shop.\t86400\tIN\tNS\tns.gabia.net.\n",
+        "matched_text": "ns.gabia.co.kr., ns1.gabia.co.kr., ns.gabia.net.",
+        "status_code": null,
+        "masked": false,
+        "masked_patterns": []
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-200"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.482457+00:00"
+    },
+    {
+      "finding_id": "f-1dae127df0aa",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "CAA Record",
+      "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+      "category": "unknown",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "can-fly.shop",
+      "method": "UNKNOWN",
+      "parameter": null,
+      "evidence": {
+        "request_sample": ";; opcode: QUERY, status: NOERROR, id: 33640\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;can-fly.shop.\tIN\t CAA\n",
+        "response_sample": ";; opcode: QUERY, status: NOERROR, id: 33640\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;can-fly.shop.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ncan-fly.shop.\t86400\tIN\tSOA\tns.gabia.co.kr. hosting.gabia.com. 2026052117 1800 600 1209600 86400\n",
+        "matched_text": null,
+        "status_code": null,
+        "masked": false,
+        "masked_patterns": []
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": [
+          "CWE-200"
+        ]
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.482505+00:00"
+    },
+    {
+      "finding_id": "f-e2e88f8de4f5",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "Detect SSL Certificate Issuer",
+      "description": "Extract the issuer's organization from the target's certificate. Issuers are entities which sign and distribute certificates.",
+      "category": "crypto",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "can-fly.shop:443",
+      "method": "UNKNOWN",
+      "parameter": null,
+      "evidence": {
+        "request_sample": null,
+        "response_sample": null,
+        "matched_text": "Let's Encrypt",
+        "status_code": null,
+        "masked": false,
+        "masked_patterns": []
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": []
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.482525+00:00"
+    },
+    {
+      "finding_id": "f-52926b73b86c",
+      "run_id": "20260610T055507Z_back-kyung-local_nuclei",
+      "tool": "nuclei",
+      "target_id": "back-kyung-local",
+      "title": "SSL DNS Names",
+      "description": "Extract the Subject Alternative Name (SAN) from the target's certificate. SAN facilitates the usage of additional hostnames with the same certificate.",
+      "category": "crypto",
+      "severity": "info",
+      "confidence": "medium",
+      "reproducibility": "not_tested",
+      "url": "can-fly.shop:443",
+      "method": "UNKNOWN",
+      "parameter": null,
+      "evidence": {
+        "request_sample": null,
+        "response_sample": null,
+        "matched_text": "can-fly.shop, www.can-fly.shop",
+        "status_code": null,
+        "masked": false,
+        "masked_patterns": []
+      },
+      "risk": {
+        "impact_score": 0.0,
+        "exploitability_score": 0.0,
+        "exposure_score": 0.0,
+        "final_score": 0.0
+      },
+      "mappings": {
+        "owasp_top10": [],
+        "owasp_asvs": [],
+        "mitre_attack": [],
+        "cwe": []
+      },
+      "next_actions": [],
+      "created_at": "2026-06-10T06:54:52.482544+00:00"
+    }
+  ]
+}
